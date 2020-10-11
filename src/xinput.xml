@@ -1604,6 +1604,11 @@ authorization from the authors.
     </enum>
 
     <enum name="DeviceType">
+        <!--
+             'Removed' is not part of the spec, but the server sends it when a device is removed.
+             See https://gitlab.freedesktop.org/xorg/xserver/-/issues/1036
+        -->
+        <item name="Removed">        <value>0</value> </item>
         <item name="MasterPointer">  <value>1</value> </item>
         <item name="MasterKeyboard"> <value>2</value> </item>
         <item name="SlavePointer">   <value>3</value> </item>
