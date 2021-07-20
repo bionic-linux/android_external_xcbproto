@@ -26,7 +26,7 @@ authorization from the authors.
 -->
 <!-- This file describes version 4 of XFixes. -->
 <xcb header="xfixes" extension-xname="XFIXES" extension-name="XFixes"
-    major-version="6" minor-version="0">
+    major-version="6" minor-version="1">
   <import>xproto</import>
   <import>render</import>
   <import>shape</import>
@@ -217,7 +217,7 @@ authorization from the authors.
     <field type="INT16"  name="dy" />
   </request>
 
-  <request name="RegionExtents" opcode="18"> 	
+  <request name="RegionExtents" opcode="18">
     <field type="REGION" name="source" />
     <field type="REGION" name="destination" />
   </request>
@@ -229,10 +229,10 @@ authorization from the authors.
       <field type="RECTANGLE" name="extents" />
       <pad bytes="16" />
       <list  type="RECTANGLE" name="rectangles">
-	<op op='/'>
-		<fieldref>length</fieldref>
-		<value>2</value>
-	</op>
+        <op op='/'>
+          <fieldref>length</fieldref>
+          <value>2</value>
+        </op>
       </list>
     </reply>
   </request>
@@ -322,7 +322,7 @@ authorization from the authors.
     <field type="CARD16" name="top" />
     <field type="CARD16" name="bottom" />
   </request>
-  
+
   <!-- Version 4 -->
   <request name="HideCursor" opcode="29">
     <field type="WINDOW" name="window" />
@@ -365,6 +365,7 @@ authorization from the authors.
   <enum name="ClientDisconnectFlags">
     <item name="Default"><value>0</value></item>
     <item name="Terminate"><bit>0</bit></item>
+    <item name="ForceTerminate"><bit>1</bit></item>
     <doc>
       <field name="Default"><![CDATA[
 The default behavior for regular clients: the X11 server won't terminate as long
@@ -375,6 +376,16 @@ XFixesClientDisconnectFlagTerminate) are connected.
       <field name="Terminate"><![CDATA[
 Indicates to the X11 server that it can ignore the client and terminate itself
 even though the client is still connected to the X11 server.
+      ]]></field>
+      <field name="ForceTerminate"><![CDATA[
+Indicates to the X11 server that it MUST terminate if this
+particular client disconnects, even if other clients that have not set
+XFixesClientDisconnectFlagTerminate are still connected. The X11 server is
+not allowed to destroy any X11 resources (such as grabs or windows) before
+terminating.  Screen lockers MUST use this flag to ensure that the screen
+does not unlock if they exit, which would create a security vulnerability.
+
+Only available in XFixes versions 6.1 and better.
       ]]></field>
     </doc>
   </enum>
