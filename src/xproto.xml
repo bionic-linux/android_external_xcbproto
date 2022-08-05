@@ -160,6 +160,12 @@ authorization from the authors.
   </enum>
 
   <enum name="PointerEventMask">
+    <doc>
+      <brief>subset of event mask for pointer events in grabs</brief>
+      <see type="request" name="GrabPointer" />
+      <see type="request" name="GrabButton" />
+      <see type="request" name="ChangeActivePointerGrab" />
+    </doc>
     <item name="NoEvent">           <value>0</value></item>
     <item name="ButtonPress">         <bit>2</bit></item>
     <item name="ButtonRelease">       <bit>3</bit></item>
@@ -177,6 +183,12 @@ authorization from the authors.
   </enum>
 
   <enum name="DeviceEventMask">
+    <doc>
+      <brief>subset of event mask for device events that is used in do_not_propagate_mask</brief>
+      <see type="request" name="CreateWindow" />
+      <see type="request" name="ChangeWindowAttributes" />
+      <see type="request" name="GetWindowAttributes" />
+    </doc>
     <item name="NoEvent">           <value>0</value></item>
     <item name="KeyPress">            <bit>0</bit></item>
     <item name="KeyRelease">          <bit>1</bit></item>
