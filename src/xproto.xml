@@ -159,6 +159,38 @@ authorization from the authors.
     <item name="OwnerGrabButton">     <bit>24</bit></item>
   </enum>
 
+  <enum name="PointerEventMask">
+    <item name="NoEvent">           <value>0</value></item>
+    <item name="ButtonPress">         <bit>2</bit></item>
+    <item name="ButtonRelease">       <bit>3</bit></item>
+    <item name="EnterWindow">         <bit>4</bit></item>
+    <item name="LeaveWindow">         <bit>5</bit></item>
+    <item name="PointerMotion">       <bit>6</bit></item>
+    <item name="PointerMotionHint">   <bit>7</bit></item>
+    <item name="Button1Motion">       <bit>8</bit></item>
+    <item name="Button2Motion">       <bit>9</bit></item>
+    <item name="Button3Motion">       <bit>10</bit></item>
+    <item name="Button4Motion">       <bit>11</bit></item>
+    <item name="Button5Motion">       <bit>12</bit></item>
+    <item name="ButtonMotion">        <bit>13</bit></item>
+    <item name="KeymapState">         <bit>14</bit></item>
+  </enum>
+
+  <enum name="DeviceEventMask">
+    <item name="NoEvent">           <value>0</value></item>
+    <item name="KeyPress">            <bit>0</bit></item>
+    <item name="KeyRelease">          <bit>1</bit></item>
+    <item name="ButtonPress">         <bit>2</bit></item>
+    <item name="ButtonRelease">       <bit>3</bit></item>
+    <item name="PointerMotion">       <bit>6</bit></item>
+    <item name="Button1Motion">       <bit>8</bit></item>
+    <item name="Button2Motion">       <bit>9</bit></item>
+    <item name="Button3Motion">       <bit>10</bit></item>
+    <item name="Button4Motion">       <bit>11</bit></item>
+    <item name="Button5Motion">       <bit>12</bit></item>
+    <item name="ButtonMotion">        <bit>13</bit></item>
+  </enum>
+
   <enum name="BackingStore">
     <item name="NotUseful"> <value>0</value></item>
     <item name="WhenMapped"><value>1</value></item>
@@ -1352,7 +1384,7 @@ parent's cursor will cause an immediate change in the displayed cursor.
         </bitcase>
         <bitcase>
           <enumref ref="CW">DontPropagate</enumref>
-          <field type="CARD32" name="do_not_propogate_mask" mask="EventMask"/>
+          <field type="CARD32" name="do_not_propogate_mask" mask="DeviceEventMask"/>
         </bitcase>
         <bitcase>
           <enumref ref="CW">Colormap</enumref>
@@ -1495,7 +1527,7 @@ The X server could not allocate the requested resources (no memory?).
         </bitcase>
         <bitcase>
           <enumref ref="CW">DontPropagate</enumref>
-          <field type="CARD32" name="do_not_propogate_mask" mask="EventMask"/>
+          <field type="CARD32" name="do_not_propogate_mask" mask="DeviceEventMask"/>
         </bitcase>
         <bitcase>
           <enumref ref="CW">Colormap</enumref>
@@ -1570,7 +1602,7 @@ The specified `window` does not exist.
       <field type="COLORMAP" name="colormap" altenum="Colormap" />
       <field type="CARD32" name="all_event_masks" mask="EventMask" />
       <field type="CARD32" name="your_event_mask" mask="EventMask" />
-      <field type="CARD16" name="do_not_propagate_mask" mask="EventMask" />
+      <field type="CARD16" name="do_not_propagate_mask" mask="DeviceEventMask" />
       <pad bytes="2" />
       <doc>
         <field name="override_redirect"><![CDATA[
@@ -2585,7 +2617,7 @@ Keyboard event processing continues normally.
   <request name="GrabPointer" opcode="26">
     <field type="BOOL" name="owner_events" />
     <field type="WINDOW" name="grab_window" />
-    <field type="CARD16" name="event_mask" mask="EventMask" />
+    <field type="CARD16" name="event_mask" mask="PointerEventMask" />
     <field type="BYTE" name="pointer_mode" enum="GrabMode" />
     <field type="BYTE" name="keyboard_mode" enum="GrabMode" />
     <field type="WINDOW" name="confine_to" altenum="Window" />
@@ -2740,7 +2772,7 @@ Scroll wheel. TODO: direction?
   <request name="GrabButton" opcode="28">
     <field type="BOOL" name="owner_events" />
     <field type="WINDOW" name="grab_window" />
-    <field type="CARD16" name="event_mask" mask="EventMask" />
+    <field type="CARD16" name="event_mask" mask="PointerEventMask" />
     <field type="CARD8" name="pointer_mode" enum="GrabMode" />
     <field type="CARD8" name="keyboard_mode" enum="GrabMode" />
     <field type="WINDOW" name="confine_to" altenum="Window" />
@@ -2847,7 +2879,7 @@ The specified `window` does not exist.
     <pad bytes="1" />
     <field type="CURSOR" name="cursor" altenum="Cursor" />
     <field type="TIMESTAMP" name="time" altenum="Time" />
-    <field type="CARD16" name="event_mask" mask="EventMask" />
+    <field type="CARD16" name="event_mask" mask="PointerEventMask" />
     <pad bytes="2" />
   </request>
 
