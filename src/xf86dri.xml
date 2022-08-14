@@ -55,6 +55,7 @@ authorization from the authors.
 	<reply>
 	    <pad bytes="1" />
 	    <field type="BOOL" name="is_capable" />
+	    <pad bytes="3" />
 	</reply>
     </request>
 
