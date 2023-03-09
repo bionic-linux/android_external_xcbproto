@@ -2,6 +2,7 @@
 This module contains the classes which represent XCB data types.
 '''
 import sys
+from functools import reduce
 from xcbgen.expr import Field, Expression
 from xcbgen.align import Alignment, AlignmentLog
 
