@@ -2,9 +2,11 @@
 This module contains the classes which represent XCB data types.
 '''
 import sys
-from functools import reduce
 from xcbgen.expr import Field, Expression
 from xcbgen.align import Alignment, AlignmentLog
+
+if sys.version_info[0] >= 3:
+    from functools import reduce
 
 if sys.version_info[:2] >= (3, 3):
     from xml.etree.ElementTree import SubElement
