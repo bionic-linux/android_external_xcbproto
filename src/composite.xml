@@ -135,7 +135,7 @@ other requests using Composite.  Failure to do so will cause a BadRequest error.
     <field type="CARD8" name="update" enum="Redirect" />
     <pad bytes="3" />
     <doc>
-      <brief>Redirect all current and future children of ‘window’</brief>
+      <brief>Redirect all current and future children of "window"</brief>
       <description>
 	Hierarchies starting at all current and future children of window
 	will be redirected as in RedirectWindow. If update is Manual,
