@@ -1,0 +1,11 @@
+#
+# PYTHON can be set in the environment for the find_vpython(1) utility.
+#
+option('check_xml', type: 'boolean', value: false,
+	description: 'check xml files against schema with xmllint')
+option('compile_python', type: 'boolean', value: true,
+	description: 'compile python at install time (self target)')
+option('pkgconfdir', type: 'string', value: '${datadir}/pkgconfig',
+	description: 'installation directory for pkg-config file')
+option('python_prefix', type: 'string', value: '${prefix}',
+	description: 'prefix for python module installation')
