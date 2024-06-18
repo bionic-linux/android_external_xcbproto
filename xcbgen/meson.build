@@ -8,8 +8,8 @@ python_search = run_command('../find_vpython.sh', '>=', '2', '5', check : false)
 has_python = false
 if python_search.returncode() == 0
     has_python = true
-    python = python_search.stdout().split()[0]
-    pythondir = python_search.stdout().split()[1]
+    python = python_search.stdout().split(';')[0]
+    pythondir = python_search.stdout().split(';')[1]
     message('python found:', python)
 else
     message('python not found:')

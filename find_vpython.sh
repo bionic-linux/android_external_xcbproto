@@ -7,9 +7,14 @@
 usage="$0 [ {'<' | '<=' | '==' | '>=' | '>'} major [minor [micro]]"
 
 # Success: exits with 0 and returns on stdout pathname and subdir for
-# third parties modules; the instance retained is the highest matching
-# version (if not desired, set en PYTHON with path of wanted
-# instance).
+# third parties modules separated by a semi-colon ';', with a trailing
+# ';' and whatever newline combination is returned; the instance
+# retained is the highest matching version (if not desired,
+# set env PYTHON with path of wanted # instance).
+#
+# If PYTHONVER is set, PYTHONVER is used to # generate the subdir
+# returned and PYTHON is not tested for (this does mean that the
+# definition of env PYTHON variable is returned as is).
 #
 # Failure: returns nothing on stdout (may print error message on
 # stderr) and set exit status to 1 for syntax error, 2 for no
@@ -22,6 +27,7 @@ usage="$0 [ {'<' | '<=' | '==' | '>=' | '>'} major [minor [micro]]"
 #
 
 : ${PYTHON:=}
+: ${PYTHONVER:=}
 
 # Subr
 cknum()
@@ -40,13 +46,13 @@ ckver()
 		return
 	}
 	_version=$(($_major * 1000 * 1000))
-	if test $nfig -gt 1; then
-		_minor=$($1 -c "import sys; print(sys.version_info[1])")
+	_minor=$($1 -c "import sys; print(sys.version_info[1])")
+	_micro=$($1 -c "import sys; print(sys.version_info[2])")
+	if test $nfig -ge 2; then
 		_version=$(($_version + $_minor * 1000))
-		if test $nfig -eq 3; then
-			_micro=$($1 -c "import sys; print(sys.version_info[2])")
-			_version=$(($_version + $_micro))
-		fi
+	fi
+	if test $nfig -eq 3; then
+		_version=$(($_version + $_micro))
 	fi
 
 	if test $nfig -gt 0; then
@@ -98,7 +104,9 @@ fi
 bversion=0
 
 candidates=
-if test -z "$PYTHON"; then
+if test "${PYTHONVER:-}"; then
+	dversion="$PYTHONVER"
+elif test -z "${PYTHON:-}"; then
 	# search PATH for all possible python interpreters
 	#
 	# !!! We are expecting Unix like syntax including under
@@ -116,12 +124,14 @@ else #
 	candidates="$PYTHON"
 fi
 
-for candidate in ${candidates:-}; do
-	ckver $candidate
-done
+if test "${candidates:-}"; then
+	for candidate in $candidates; do
+		ckver $candidate
+	done
+fi
 
-if test "$PYTHON"; then
-	echo "$PYTHON lib/python$dversion/site-packages"
+if test "${PYTHON:-}" || test "${PYTHONVER:-}"; then
+	echo "$PYTHON;lib/python$dversion/site-packages;"
 	exit 0
 else
 	exit 2
