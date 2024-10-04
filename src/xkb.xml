@@ -1988,6 +1988,10 @@ authorization from the authors.
 		<field name="want" type="CARD16" mask="GBNDetail" />
 		<field name="load" type="BOOL" />
 		<pad bytes="1" />
+		<!-- no better way yet - using individual lists would make each of them padded to 32bit,
+		     which actually is NOT the case -->
+		<list type="BYTE" name="data" />
+
 		<!-- XXX: Intermixed fixed size fields and lists are broken
 		<field name="keymapsSpecLen" type="CARD8" />
 		<list name="keymapsSpec" type="STRING8">
@@ -2317,6 +2321,27 @@ authorization from the authors.
 				</bitcase>
 			</switch>
 		</reply>
+		<doc>
+			<brief>Return keymap from current mapping</brief>
+			<description>
+Assembles and returns a keymap from the current mapping and specified elements from the server
+database of keymap components for the keyboard specified by deviceSpec, and optionally replaces
+the current keyboard mapping with the newly generated description. If deviceSpec does not specify
+a valid keyboard device, a Keyboard error results.
+
+The want field lists the pieces of the keyboard description that the client wants to have reported
+for the newly constructed keymap. The need field lists all of the pieces that must be reported.
+If any of the pieces in need cannot be loaded from the specified names, no description of the
+keyboard is returned.
+
+The data field holds the concetanation of keymapsSpec, keycodesSpec, typesSpec, compatMapSpec,
+symbolsSpec and geometrySpec component expressions. Each of them composed of CARD8 length field
+followed by the payload bytes. NO PADDING applied between them!
+			</description>
+			<field name="deviceSpec">Keyboard device specification.</field>
+			<field name="need">mask of pieces that MUST be reported</field>
+			<field name="want">mask of pieces that SHOULD be reported</field>
+		</doc>
 	</request>
 
 	<request name="GetDeviceInfo" opcode="24">
