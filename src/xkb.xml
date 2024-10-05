@@ -385,23 +385,7 @@ authorization from the authors.
 		<list name="string" type="char">
 			<fieldref>length</fieldref>
 		</list>
-		<list type="void" name="alignment_pad">
-			<op op="-">
-				<op op="&amp;">
-					<op op="+">
-						<fieldref>length</fieldref>
-						<value>5</value>
-					</op>
-					<unop op="~">
-						<value>3</value>
-					</unop>
-				</op>
-				<op op="+">
-					<fieldref>length</fieldref>
-					<value>2</value>
-				</op>
-			</op>
-		</list>
+		<pad align="4" />
 	</struct>
 
 	<struct name="KTMapEntry">
@@ -547,26 +531,10 @@ authorization from the authors.
 
 	<typedef oldname="char" newname="STRING8" />
 
-	<!-- XXX: Property is broken
-	<struct name="Property">
-		<field name="nameLength" type="CARD16" />
-		<list name="name" type="STRING8">
-			<fieldref>nameLength</fieldref>
-		</list>
-		<field name="valueLength" type="CARD16" />
-		<list name="value" type="STRING8">
-			<fieldref>valueLength</fieldref>
-		</list>
-	</struct>
-	-->
-	<!-- XXX: This would be the correct Property structure as per spec.,
-		  but it's broken atm. too. Add it anyway here, so we don't
-		  loose that information.
 	<struct name="Property">
 		<field name="name" type="CountedString16" />
 		<field name="value" type="CountedString16" />
 	</struct>
-	-->
 
 	<struct name="Outline">
 		<field name="nPoints" type="CARD8" />
@@ -643,77 +611,52 @@ authorization from the authors.
 		<item name="Logo">      <value>5</value> </item>
 	</enum>
 
-	<!-- XXX: doodads are broken
-	<struct name="CommonDoodad">
+	<struct name="Doodad">
 		<field name="name" type="ATOM" />
 		<field name="type" type="CARD8" enum="DoodadType" />
 		<field name="priority" type="CARD8" />
 		<field name="top" type="INT16" />
 		<field name="left" type="INT16" />
 		<field name="angle" type="INT16" />
-		<pad bytes="8" />
+		<switch name="DoodadType">
+			<fieldref>type</fieldref>
+			<case>
+				<enumref ref="DoodadType">Outline</enumref>
+				<field name="outlineColorNdx" type="CARD8" />
+				<field name="outlineShapeNdx" type="CARD8" />
+				<pad bytes="6" />
+			</case>
+			<case>
+				<enumref ref="DoodadType">Solid</enumref>
+				<field name="solidColorNdx" type="CARD8" />
+				<field name="solidShapeNdx" type="CARD8" />
+				<pad bytes="6" />
+			</case>
+			<case>
+				<enumref ref="DoodadType">Text</enumref>
+				<field name="textWidth" type="CARD16" />
+				<field name="textHeight" type="CARD16" />
+				<field name="textColorNdx" type="CARD8" />
+				<pad bytes="3" />
+				<field name="text" type="CountedString16" />
+				<field name="textFont" type="CountedString16" />
+			</case>
+			<case>
+				<enumref ref="DoodadType">Indicator</enumref>
+				<field name="indicatorShapeNdx" type="CARD8" />
+				<field name="indicatorOnColorNdx" type="CARD8" />
+				<field name="indicatorOffColorNdx" type="CARD8" />
+				<pad bytes="5" />
+			</case>
+			<case>
+				<enumref ref="DoodadType">Logo</enumref>
+				<field name="logoColorNdx" type="CARD8" />
+				<field name="logoShapeNdx" type="CARD8" />
+				<pad bytes="6" />
+				<field name="logoName" type="CountedString16" />
+			</case>
+		</switch>
 	</struct>
-
-	<struct name="ShapeDoodad">
-		<field name="name" type="ATOM" />
-		<field name="type" type="CARD8" enum="DoodadType" />
-		<field name="priority" type="CARD8" />
-		<field name="top" type="INT16" />
-		<field name="left" type="INT16" />
-		<field name="angle" type="INT16" />
-		<field name="colorNdx" type="CARD8" />
-		<field name="shapeNdx" type="CARD8" />
-		<pad bytes="6" />
-	</struct>
-
-	<struct name="TextDoodad">
-		<field name="name" type="ATOM" />
-		<field name="type" type="CARD8" enum="DoodadType" />
-		<field name="priority" type="CARD8" />
-		<field name="top" type="INT16" />
-		<field name="left" type="INT16" />
-		<field name="angle" type="INT16" />
-		<field name="width" type="CARD16" />
-		<field name="height" type="CARD16" />
-		<field name="colorNdx" type="CARD8" />
-		<pad bytes="3" />
-		<field name="text" type="CountedString16" />
-		<field name="font" type="CountedString16" />
-	</struct>
-
-	<struct name="IndicatorDoodad">
-		<field name="name" type="ATOM" />
-		<field name="type" type="CARD8" enum="DoodadType" />
-		<field name="priority" type="CARD8" />
-		<field name="top" type="INT16" />
-		<field name="left" type="INT16" />
-		<field name="angle" type="INT16" />
-		<field name="shapeNdx" type="CARD8" />
-		<field name="onColorNdx" type="CARD8" />
-		<field name="offColorNdx" type="CARD8" />
-		<pad bytes="5" />
-	</struct>
-
-	<struct name="LogoDoodad">
-		<field name="name" type="ATOM" />
-		<field name="type" type="CARD8" enum="DoodadType" />
-		<field name="priority" type="CARD8" />
-		<field name="top" type="INT16" />
-		<field name="left" type="INT16" />
-		<field name="angle" type="INT16" />
-		<field name="colorNdx" type="CARD8" />
-		<field name="shapeNdx" type="CARD8" />
-		<pad bytes="6" />
-		<field name="logoName" type="CountedString16" />
-	</struct>
-
-	<union name="Doodad">
-		<field name="common" type="CommonDoodad" />
-		<field name="shape" type="ShapeDoodad" />
-		<field name="text" type="TextDoodad" />
-		<field name="indicator" type="IndicatorDoodad" />
-		<field name="logo" type="LogoDoodad" />
-	</union>
 
 	<struct name="Section">
 		<field name="name" type="ATOM" />
@@ -737,7 +680,6 @@ authorization from the authors.
 			<fieldref>nOverlays</fieldref>
 		</list>
 	</struct>
-	-->
 
 	<struct name="Listing">
 		<field name="flags" type="CARD16" />
@@ -1205,10 +1147,7 @@ authorization from the authors.
 		<field name="lockGroup" type="BOOL" />
 		<field name="groupLock" type="CARD8" enum="Group" />
 		<field name="affectModLatches" type="CARD8" mask="ModMask" />
-		<pad bytes="1" /> <!-- This pad is a workaround to prevent an API break,
-		                       which the following field (correct fix) would cause.
 		<field name="modLatches" type="CARD8" mask="ModMask" />
-		-->
 		<pad bytes="1" />
 		<field name="latchGroup" type="BOOL" />
 		<field name="groupLatch" type="CARD16" />
@@ -1824,7 +1763,6 @@ authorization from the authors.
 		</switch>
 	</request>
 
-	<!-- XXX: Property and doodads are broken, which renders GetGeometry useless
 	<request name="GetGeometry" opcode="19">
 		<field name="deviceSpec" type="DeviceSpec" />
 		<pad bytes="2" />
@@ -1865,9 +1803,7 @@ authorization from the authors.
 			</list>
 		</reply>
 	</request>
-	-->
 
-	<!-- XXX: Property and doodads are broken, which renders SetGeometry useless
 	<request name="SetGeometry" opcode="20">
 		<field name="deviceSpec" type="DeviceSpec" />
 		<field name="nShapes" type="CARD8" />
@@ -1902,7 +1838,6 @@ authorization from the authors.
 			<fieldref>nKeyAliases</fieldref>
 		</list>
 	</request>
-	-->
 
 	<request name="PerClientFlags" opcode="21">
 		<field name="deviceSpec" type="DeviceSpec" />
