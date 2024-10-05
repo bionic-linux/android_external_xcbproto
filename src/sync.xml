@@ -46,11 +46,11 @@ for licensing information.
     <field type="CARD32" name="lo" />
   </struct>
 
-  <struct name="SYSTEMCOUNTER">
+  <struct name="SYSTEMCOUNTER" padded="true">
     <field type="COUNTER" name="counter" />
     <field type="sync:INT64" name="resolution" />
     <field type="CARD16" name="name_len" />
-    <list type="char" name="name">
+    <list type="char" name="name" offset="14">
       <fieldref>name_len</fieldref>
     </list>
     <pad align="4" />
@@ -78,6 +78,7 @@ for licensing information.
     <field type="CARD32" name="bad_alarm" />
     <field type="CARD16" name="minor_opcode" />
     <field type="CARD8" name="major_opcode" />
+    <pad bytes="2" serialize="true" />
   </error>
     
   <request name="Initialize" opcode="0">
@@ -230,6 +231,7 @@ for licensing information.
     <field type="DRAWABLE" name="drawable" />
     <field type="FENCE" name="fence" />
     <field type="BOOL" name="initially_triggered" />
+    <pad bytes="3" serialize="true" />
   </request>
 
   <request name="TriggerFence" opcode="15">

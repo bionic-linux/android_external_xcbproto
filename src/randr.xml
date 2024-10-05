@@ -882,6 +882,7 @@ authorization from the authors.
 	<request name="GetMonitors" opcode="42">
 		<field type="WINDOW" name="window" />
 		<field type="BOOL" name="get_active" />
+		<pad bytes="3" serialize="true"/>
 		<reply>
 			<pad bytes="1" />
 			<field type="TIMESTAMP" name="timestamp" />
@@ -927,6 +928,7 @@ authorization from the authors.
 	<request name="FreeLease" opcode="46">
 	  <field type="LEASE" name="lid" />
 	  <field type="BYTE" name="terminate" />
+	  <pad bytes="3" />
 	</request>
 
 	<struct name="LeaseNotify">

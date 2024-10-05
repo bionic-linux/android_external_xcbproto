@@ -2345,7 +2345,7 @@ authorization from the authors.
 			<pad bytes="2" />
 			<field name="devType" type="ATOM" />
 			<field name="nameLen" type="CARD16" />
-			<list name="name" type="STRING8">
+			<list name="name" type="STRING8" offset="34">
 				<fieldref>nameLen</fieldref>
 			</list>
 			<pad align="4" />

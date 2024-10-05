@@ -64,6 +64,7 @@ authorization from the authors.
     <xsd:attribute name="altenum" type="xsd:string" use="optional" />
     <xsd:attribute name="mask" type="xsd:string" use="optional" />
     <xsd:attribute name="altmask" type="xsd:string" use="optional" />
+    <xsd:attribute name="offset" type="xsd:integer" use="optional" />
   </xsd:complexType>
 
   <!-- case expression -->
@@ -230,6 +231,7 @@ authorization from the authors.
       </xsd:choice>
     </xsd:sequence>
     <xsd:attribute name="name" type="xsd:string" use="required" />
+    <xsd:attribute name="padded" type="xsd:boolean" use="optional" />
   </xsd:complexType>
 
   <!-- Type for a packet structure -->

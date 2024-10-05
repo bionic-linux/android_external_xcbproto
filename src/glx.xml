@@ -630,6 +630,7 @@ The patch that fixed this server bug in X.org is here:
 		<field type="CARD32" name="type" />
 		<field type="BOOL" name="swap_bytes" />
 		<field type="BOOL" name="lsb_first" />
+		<pad align="4" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="24" />
