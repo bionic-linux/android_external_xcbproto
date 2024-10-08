@@ -346,4 +346,34 @@ True if the server should map the segment read-only; otherwise false.
       ]]></field>
     </doc>
   </request>
+
+  <request name="AttachFdExt" opcode="6">
+    <field type="SEG" name="shmseg" />
+    <fd name="shm_fd" />
+    <field type="BOOL" name="read_only" />
+    <pad bytes="3" />
+    <field type="CARD32" name="size" />
+    <field type="CARD64" name="offset" />
+    <doc>
+      <brief>Create a shared memory segment</brief>
+      <description><![CDATA[
+Create a shared memory segment from the passed file descriptor.  The X server
+will call mmap() on the passed file descriptor with the provided offset and
+size.
+      ]]></description>
+      <field name="shmseg"><![CDATA[
+A shared memory segment ID created with xcb_generate_id().
+      ]]></field>
+      <field name="read_only"><![CDATA[
+True if the segment shall be mapped read only by the X11 server, otherwise false.
+      ]]></field>
+      <field name="size"><![CDATA[
+The size that the X11 server will pass to mmap(2).  Must be greater than zero,
+otherwise a Value error will result.
+      ]]></field>
+      <field name="offset"><![CDATA[
+The offset that the X11 server will pass to mmap(2).
+      ]]></field>
+    </doc>
+  </request>
 </xcb>
