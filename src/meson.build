@@ -39,17 +39,18 @@ xml_files = [
     'xvmc.xml'
 ]
 
-# CHECKING IF REQUESTED
-# If checking is requested, failure is fatal.
+# CHECKING IF REQUESTED explicitely and then failure is fatal;
+# if auto, failing is not fatal.
+# (Code due to Dylan Baker.)
 #
-if get_option('check_xml')
-    xmllint = find_program('xmllint', required : true)
-    foreach f : xml_files
-        if f != 'xcb.xsd'
-            run_command(xmllint, '--noout', '--schema', 'xcb.xsd',
-               f, check: true)
-        endif
-    endforeach
-endif
+xmllint = find_program('xmllint', required : get_option('check_xml'),
+    disabler : true)
+foreach f : xml_files
+    if f == 'xcb.xsd'
+        continue
+    endif
+    test(f'lint @f@', xmllint, args : ['--noout', '--schema',
+        files('xcb.xsd'), f], suite : 'xmlllint')
+endforeach
 
 install_data(xml_files, install_dir: xcbincludedir)

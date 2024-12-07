@@ -1,7 +1,7 @@
 #
 # PYTHON can be set in the environment for the find_vpython(1) utility.
 #
-option('check_xml', type: 'boolean', value: false,
+option('check_xml', type: 'feature',
 	description: 'check xml files against schema with xmllint')
 option('compile_python', type: 'boolean', value: true,
 	description: 'compile python at install time (self target)')
