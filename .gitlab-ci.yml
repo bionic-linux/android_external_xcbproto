@@ -173,7 +173,7 @@ meson:
   script:
     - export SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH
     - export DESTDIR=$PWD/_meson_inst
-    - meson setup builddir -Dcheck_xml=true
+    - meson setup builddir -Dcheck_xml=enabled
     - meson install -C builddir
   artifacts:
     paths:
@@ -207,7 +207,7 @@ meson from autotools tarball:
     - mkdir -p _tarball_build
     - tar xf xcb-proto-*.tar.xz -C _tarball_build
     - pushd _tarball_build/xcb-proto-*
-    - meson setup builddir -Dcheck_xml=true
+    - meson setup builddir -Dcheck_xml=enabled
     - meson install -C builddir
   variables:
     GIT_STRATEGY: none
