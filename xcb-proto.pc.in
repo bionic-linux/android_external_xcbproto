@@ -1,5 +1,4 @@
 prefix=@prefix@
-exec_prefix=@exec_prefix@
 datarootdir=@datarootdir@
 datadir=@datadir@
 xcbincludedir=${pc_sysrootdir}@xcbincludedir@
